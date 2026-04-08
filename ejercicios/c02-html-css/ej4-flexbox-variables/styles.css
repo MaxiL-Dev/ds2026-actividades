@@ -10,6 +10,12 @@
     --sombra2: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     display: flex;
     font-family: 'Roboto', sans-serif;
@@ -104,6 +110,7 @@ main {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.7rem;
     margin-top: 0;
+    margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;   
 }
 

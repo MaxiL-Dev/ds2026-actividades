@@ -12,6 +12,12 @@
     --sombra2: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     display: flex;
     font-family: 'Roboto', sans-serif;
@@ -73,6 +79,10 @@ main {
     transition: box-shadow 0.2s;
 }
 
+.main-desc {
+    margin-bottom: 1.5rem;
+}
+
 .main-desc strong{
     font-weight: 700;
     color: var(--color-secundario);
@@ -112,12 +122,14 @@ main {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.7rem;
     margin-top: 0;  
+    margin-bottom: 1.5rem;
 }
 
 .titulo {
     font-family: 'Montserrat', sans-serif;
     font-size: 2.5rem;
     margin-top: 0;
+    margin-bottom: 1.5rem;
 }
 .formulario {
     max-width: 500px;
@@ -163,6 +175,10 @@ main {
 
 .formulario button:hover {
     background-color: var(--color-secundario);
+}
+
+.formulario button:active {
+    background-color: var(--color-terciario);
 }
 
 @media (max-width: 768px) {
