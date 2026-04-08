@@ -1,0 +1,114 @@
+:root {
+    --color-fondo: #e6e6e6;
+    --color-primario: #374E6E;
+    --color-secundario: #5578AA;
+    --color-texto: #242424;
+    --color-texto-claro: #e4e4e4;
+    --borde-redondeado-1: 5px;
+    --borde-redondeado-2: 10px;
+    --sombra: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --sombra2: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+body {
+    display: flex;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--color-fondo);
+}
+
+.sidebar {
+    margin: 0;
+    width: 14rem;
+    height: 100vh;
+    background-color: var(--color-primario);
+    padding-top: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.sidebar li {
+    margin: 1rem 0;
+}
+
+.sidebar a {
+    color: var(--color-texto-claro);
+    text-decoration: none;
+    display: block;
+    padding: 1rem;
+    transition: background-color 0.2s;
+}
+
+.sidebar a:hover {
+    background-color: var(--color-secundario);
+}
+
+main {
+    padding: 2rem;
+    max-width: 140vw;
+    color: var(--color-texto)
+}
+
+.main-image {
+    width: 100%;
+    max-width: 600px;
+    border-radius: var(--borde-redondeado-2);
+    box-shadow: var(--sombra);
+    transition: box-shadow 0.2s;
+}
+
+.main-desc strong{
+    font-weight: 700;
+    color: var(--color-secundario);
+}
+
+.main-image:hover {
+    box-shadow: var(--sombra2);
+}
+
+.lista {
+    list-style-type: none;
+    padding: 0;
+}
+
+.lista li {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: white;
+    border-radius: var(--borde-redondeado-1);
+    box-shadow: var(--sombra);
+    transition: box-shadow 0.2s;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.lista li:hover {
+    box-shadow: var(--sombra2);
+}
+
+.lista strong {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--color-secundario);
+}
+
+.titulos-sidebar {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.7rem;
+    margin-top: 0;
+    padding-bottom: 0.5rem;   
+}
+
+.titulo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.5rem;
+    margin-top: 0;
+}
