@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABM de libros</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+
+<body>
+    <div class="container">
+        <h1>Catálogo</h1>
+        
+        <div id="errorForm"></div>
+        <div class="formulario">
+            <input type="text" id="tituloInput" placeholder="Ingrese el título"> <br>
+            <input type="text" id="autorInput" placeholder="Ingrese el autor"> <br>
+            <input type="number" id="precioInput" placeholder="Ingrese el precio"> <br>
+            <input type="text" id="generoInput" placeholder="Ingrese el género"> <br>
+            <div class="checkbox-container">
+                <input type="checkbox" id="disponible">
+                <label for="disponible">Disponible</label>
+            </div> <br>
+            <button id="agregarLibroBoton">Agregar libro</button>
+        </div>
+
+        <div class="filtro-container">
+            <input 
+                type="text" 
+                id="filtroAutor" 
+                placeholder="Buscar por autor..."
+            >
+            <button type="button" id="filtrar">Filtrar</button>
+        </div>
+
+        <div class="botones">
+            <button type="button" id="mostrarDisponibles">Solo disponibles</button>
+            <button type="button" id="mostrarTodos">Ver todos</button>
+        </div>
+
+        <ul id="listado"></ul>
+
+        <p id="stats"></p>
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
