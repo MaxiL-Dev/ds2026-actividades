@@ -1,0 +1,97 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Contenedor principal */
+.container {
+    width: 100%;
+    max-width: 800px;
+}
+
+/* Título */
+h1 {
+    margin-bottom: 20px;
+}
+
+/* Input + botón */
+.filtro-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.filtro-container input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Botones generales */
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: auto;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Botones secundarios */
+.botones {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Listado */
+#listado {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Card de libro */
+#listado li {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Texto */
+#listado h3 {
+    margin-bottom: 5px;
+}
+
+#listado p {
+    margin: 3px 0;
+    color: #555;
+}
+
+/* Stats */
+#stats {
+    margin-top: 15px;
+    font-weight: bold;
+}

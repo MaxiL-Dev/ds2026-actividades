@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de libros tipado</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Catálogo</h1>
+
+        <div class="filtro-container">
+            <input 
+                type="text" 
+                id="filtroAutor" 
+                placeholder="Buscar por autor..."
+            >
+            <button type="button" id="filtrar">Filtrar</button>
+        </div>
+
+        <div class="botones">
+            <button type="button" id="mostrarDisponibles">Solo disponibles</button>
+            <button type="button" id="mostrarTodos">Ver todos</button>
+        </div>
+
+        <ul id="listado"></ul>
+
+        <p id="stats"></p>
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
