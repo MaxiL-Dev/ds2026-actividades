@@ -4,6 +4,116 @@
     box-sizing: border-box;
 }
 
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #2b2b26, #272925);
+    
+}
+
 .navbar {
-    background-color: #63a481; 
+    background-color: #63a481;
+    padding: 12px 20px;  /* más altura */
+}
+
+.navbar-brand {
+    color: #fff2ba;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: default;
+}
+
+.navbar-brand:hover {
+    color: #fff2ba;
+}
+
+.navbar .activo {
+    color: #fff2ba;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.navbar .nav-link {
+    color: #fff2ba;
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+.hero {
+    color: #2b2b26;
+    max-width: 95%;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff2ba;
+    border-radius: 8px;
+}
+
+#libros-d {
+    color: #fff2ba;
+}
+
+.btn-primary {
+    margin-top: 1.5rem;
+    background-color: #63a481;
+    border: none;
+    padding: 0.7rem 2rem;    
+    width: 60%;
+    color: #fff2ba;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #4e8a6a;
+    color: #fff2ba;
+}
+
+.btn-primary:active {
+    background-color: #79cea0 !important;
+    color: #fff2ba !important;
+}
+
+.cards-section {
+    padding: 2rem 4rem;
+}
+
+.libro-card {
+    background-color: #fff2ba;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 100%; /* para que todas tengan la misma altura */
+}
+
+.libro-card .card-title {
+    color: #2b2b26;
+    font-weight: bold;
+}
+
+.libro-card .card-text {
+    color: #4a4a40;
+    font-size: 0.9rem;
+}
+
+.libro-card .list-group-item {
+    background-color: #fff2ba;
+    color: #2b2b26;
+    border-color: #b6ae89;
+    font-size: 0.85rem;
+}
+
+.libro-card .card-link {
+    color: #63a481;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.libro-card .card-link:hover {
+    color: #4e8a6a;
+    text-decoration: underline;
+}
+
+.libro-card .card-img-top {
+    height: 250px;      
+    object-fit: cover;    
 }

@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
     
     <title>Libreria - home</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-xl">
     <div class="container-fluid">
-        <img src="./libros.png" alt="" height="27">
+        <img src="assets/libros.png" alt="" height="27">
         <span class="navbar-brand">Libreria</span>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -19,7 +19,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-            <a class="nav-link active" aria-current="page">home</a>
+            <a class="nav-link activo" aria-current="page">home</a>
             </li>
             <li class="nav-item">
             <a class="nav-link" href="./catalogo.html">catalogo</a>
@@ -31,6 +31,114 @@
         </div>
     </div>
     </nav>
+
+    <div class="container-fluid justify-content-center hero">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 text-center">
+                <h1>Bienvenidos a la libreria</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center text-center">
+            <div class="col-12">
+                <h2>Esperamos que disfrutes de nuestra selección de libros</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center text-center mt-4">
+            <div class="col-12">
+                <a class="btn btn-primary" href="catalogo.html">Ver catálogo</a>
+            </div>
+        </div>   
+    </div>
+
+    <div class="container-fluid justify-content-center">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 text-center">
+                <h2 id="libros-d">Libros destacados</h2>
+            </div>
+        </div>   
+    </div>
+
+    <div class="container-fluid cards-section">
+        <div class="row justify-content-center g-4">
+            <div class="col-12 col-sm-8 col-md-4">
+                <div class="card libro-card">
+                    <img src="assets/cien años de soledad.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Cien años de soledad</h5>
+                        <p class="card-text">Gabriel García Márquez</p>
+                    </div>
+                    <div class="card-body">
+                        <a href="./libro.html" class="btn btn-primary">Ver más</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-8 col-md-4">
+                <div class="card libro-card">
+                    <img src="assets/el nombre de la rosa.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">El nombre de la rosa</h5>
+                        <p class="card-text">Umberto Eco</p>
+                    </div>
+                    <div class="card-body">
+                        <a href="./libro.html" class="btn btn-primary">Ver más</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-8 col-md-4">
+                <div class="card libro-card">
+                    <img src="assets/1984.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">1984</h5>
+                        <p class="card-text">George Orwell</p>
+                    </div>
+                    <div class="card-body">
+                        <a href="./libro.html" class="btn btn-primary">Ver más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center g-4 mt-2">
+            <div class="col-12 col-sm-8 col-md-4">
+                <div class="card libro-card">
+                    <img src="assets/el principito.jpeg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">El principíto</h5>
+                        <p class="card-text">Antoine de Saint-Exupéry</p>
+                    </div>
+                    <div class="card-body">
+                        <a href="./libro.html" class="btn btn-primary">Ver más</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-8 col-md-4">
+                <div class="card libro-card">
+                    <img src="assets/don quijote de la mancha.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Don Quijote de la Mancha</h5>
+                        <p class="card-text">Miguel de Cervantes</p>
+                    </div>
+                    <div class="card-body">
+                        <a href="./libro.html" class="btn btn-primary">Ver más</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-8 col-md-4">
+                <div class="card libro-card">
+                    <img src="assets/el alquimista.jfif" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">El alquimista</h5>
+                        <p class="card-text">Paulo Coelho</p>
+                    </div>
+                    <div class="card-body">
+                        <a href="./libro.html" class="btn btn-primary">Ver más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
