@@ -117,3 +117,38 @@ body {
     height: 250px;      
     object-fit: cover;    
 }
+
+.libro-page {
+    color: #2b2b26;
+    max-width: 80%;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff2ba;
+    border-radius: 8px;
+}
+
+.img-libro {
+    height: 32rem;
+    max-width: 100%;
+    height: auto;
+    border-radius: 1rem;
+}
+
+#precio {
+    color:#63a481;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.btn-volver {
+    background-color: #fff2ba;
+    border: none;
+    color: #2b2b26;
+    font-size: 1.1rem;
+    transition: background-color 0.2s ease;
+}
+
+.btn-volver:hover {
+    background-color: #b6ae89;
+    color: #2b2b26;
+}

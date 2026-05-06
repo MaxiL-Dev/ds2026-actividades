@@ -4,10 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <title>Libro</title>
 </head>
 <body>
-    
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid">
+            <a href="./catalogo.html" class="btn btn-volver rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                <i class="bi bi-arrow-left"></i>
+            </a>
+            <div class="navbar-brand d-flex align-items-center">
+                <img src="assets/libros.png" alt="" height="27">
+                <span>Libreria</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid libro-page justify-content-center">
+        <div class="row align-items-stretch">
+            <div class="col-12 col-md-4 mb-2 d-flex align-items-center">
+                <img src="assets/el principito.jpeg" alt="El principito" class="img-libro">
+            </div>
+            <div class="col-12 col-md-7 d-flex flex-column">
+                <h2>El principito</h2>
+                <p class="text-muted">Antoine de Saint-Exupéry</p>
+                <p>Un aviador que cae en el desierto del Sahara conoce a un misterioso niño llegado de un asteroide lejano. A través de sus conversaciones, el principito le revela los mundos que visitó y las personas que encontró en su camino, reflexionando sobre la amistad, el amor, la soledad y lo que los adultos han olvidado ver. Una obra que, aunque parece un cuento infantil, esconde una profunda crítica a la frivolidad del mundo adulto.</p>
+                <div class="d-flex align-items-center gap-3 mt-auto">
+                    <span id="precio">13.000$</span>
+                    <button class="btn btn-primary flex-grow-1">Comprar</button>
+                </div>
+            </div>
+        </div> 
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
