@@ -9,27 +9,59 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-        <img src="assets/libros.png" alt="" height="27">
-        <span class="navbar-brand">Librería</span>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-            <a class="nav-link" href="./index.html">home</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="./catalogo.html">catálogo</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link activo">contacto</a>
-            </li>
-        </ul>
+        <div class="container-fluid">
+            <img src="assets/libros.png" alt="" height="27">
+            <span class="navbar-brand">Librería</span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                <a class="nav-link" href="./index.html">home</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="./catalogo.html">catálogo</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link activo">contacto</a>
+                </li>
+            </ul>
+            </div>
         </div>
-    </div>
     </nav>
+
+    <div class="container-fluid justify-content-center form-contacto">
+        <div class="mb-4 justify-content-center text-center">
+            <h2>Formulario de Contacto</h2>
+        </div>
+        <form>
+            <div class="mb-3 justify-content-center">
+                <label for="nombre" class="form-label">Nombre<span>*</span></label>
+                <input type="text" class="form-control" id="nombre" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email<span>*</span></label>
+                <input type="email" class="form-control" id="email" required>
+            </div>  
+            <div class="mb-3">
+                <label for="select" class="form-label">Asunto<span>*</span></label>
+                <select class="form-select" required>
+                    <option selected>-</option>
+                    <option value="1">Consulta</option>
+                    <option value="2">Reclamo</option>
+                    <option value="3">Sugerencia</option>
+                </select>
+            </div>
+            <div class="form-floating">
+                <textarea class="form-control" id="floatingTextarea" required></textarea>
+                <label for="floatingTextarea">Mensaje</label>
+            </div>
+            <div class="justify-content-center text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-form">Enviar</button>
+            </div>
+        </form>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -194,3 +194,24 @@ body {
     color: #63a481;
     font-size: 1.2rem;
 }
+
+.form-contacto {
+    background-color: #fff7d4;
+    max-width: 80%;
+    width: 60rem;
+    padding: 3rem 2rem 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    border-radius: 12px;
+}
+
+.btn-form {
+    max-width: 90%;
+    width: 30rem;
+}
+
+label span {
+    font-weight: bold;
+    color: #63a481;
+}
