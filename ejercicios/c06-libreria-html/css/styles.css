@@ -7,12 +7,11 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #2b2b26, #272925);
-    
 }
 
 .navbar {
     background-color: #63a481;
-    padding: 12px 20px;  /* más altura */
+    padding: 12px 20px;  
 }
 
 .navbar-brand {
@@ -43,7 +42,7 @@ body {
     max-width: 95%;
     margin: 2rem auto;
     padding: 2rem;
-    background-color: #fff2ba;
+    background-color: #fff7d4;
     border-radius: 8px;
 }
 
@@ -53,7 +52,7 @@ body {
 
 .btn-primary {
     margin-top: 1.5rem;
-    background-color: #63a481;
+    background-color: #6ba3a5;
     border: none;
     padding: 0.7rem 2rem;    
     width: 60%;
@@ -64,12 +63,12 @@ body {
 }
 
 .btn-primary:hover {
-    background-color: #4e8a6a;
+    background-color: #4d7475;
     color: #fff2ba;
 }
 
 .btn-primary:active {
-    background-color: #79cea0 !important;
+    background-color: #96c5c7 !important;
     color: #fff2ba !important;
 }
 
@@ -78,11 +77,11 @@ body {
 }
 
 .libro-card {
-    background-color: #fff2ba;
+    background-color: #fff7d4;
     border: none;
     border-radius: 10px;
     overflow: hidden;
-    height: 100%; /* para que todas tengan la misma altura */
+    height: 100%; 
 }
 
 .libro-card .card-title {
@@ -93,13 +92,6 @@ body {
 .libro-card .card-text {
     color: #4a4a40;
     font-size: 0.9rem;
-}
-
-.libro-card .list-group-item {
-    background-color: #fff2ba;
-    color: #2b2b26;
-    border-color: #b6ae89;
-    font-size: 0.85rem;
 }
 
 .libro-card .card-link {
@@ -123,7 +115,7 @@ body {
     max-width: 80%;
     margin: 2rem auto;
     padding: 2rem;
-    background-color: #fff2ba;
+    background-color: #fff7d4;
     border-radius: 8px;
 }
 
@@ -135,7 +127,7 @@ body {
 }
 
 #precio {
-    color:#63a481;
+    color:#6ba3a5;
     font-weight: bold;
     font-size: 1rem;
 }
@@ -151,4 +143,54 @@ body {
 .btn-volver:hover {
     background-color: #b6ae89;
     color: #2b2b26;
+}
+
+.buscador {
+    display: flex;
+    margin-top: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.buscador input {
+    background-color:#fff7d4;
+    padding: 12px 15px;
+    max-width: 100%;
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+.buscador button {
+    padding: 12px 20px;
+    border: none;
+    background-color: #6ba3a5;
+    color: #fff2ba;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+.buscador button:hover{
+    background-color: #4d7475;
+}
+
+.buscador button:active{
+    background-color: #96c5c7;
+}
+
+#titulo-catalogo {
+    color: #fff2ba;
+}
+
+#error {
+    color: #b35347;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.cargando {
+    color: #63a481;
+    font-size: 1.2rem;
 }
