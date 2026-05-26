@@ -1,0 +1,152 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #2b2b26, #272925);
+}
+
+/* Fix: títulos del hero visibles sobre fondo claro */
+.hero h1 {
+  color: #2b2b26;
+}
+
+.hero h2 {
+  color: #4a4a40;
+}
+
+.navbar {
+  background-color: #63a481;
+  padding: 12px 20px;
+}
+
+.navbar-brand {
+  color: #fff2ba;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: default;
+}
+
+.navbar-brand:hover {
+  color: #fff2ba;
+}
+
+.navbar .activo {
+  color: #fff2ba;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.navbar .nav-link {
+  color: #fff2ba;
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
+.hero {
+  color: #2b2b26;
+  max-width: 95%;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff7d4;
+  border-radius: 8px;
+}
+
+#libros-d {
+  color: #fff2ba;
+}
+
+.btn-primary {
+  margin-top: 1.5rem;
+  background-color: #6ba3a5;
+  border: none;
+  padding: 0.7rem 2rem;
+  width: 60%;
+  color: #fff2ba;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #4d7475;
+  color: #fff2ba;
+}
+
+.btn-primary:active {
+  background-color: #96c5c7 !important;
+  color: #fff2ba !important;
+}
+
+/* Botón Me gusta — nuevo, sin pisar .btn-primary */
+.btn-like {
+  background-color: #fff7d4;
+  border: 1px solid #6ba3a5;
+  border-radius: 4px;
+  color: #2b2b26;
+  font-size: 0.9rem;
+  padding: 0.7rem 0.8rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  align-self: stretch;
+}
+
+.btn-like:hover {
+  background-color: #e8f0d0;
+}
+
+.cards-section {
+  padding: 2rem 4rem;
+}
+
+.libro-card {
+  background-color: #fff7d4;
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 100%;
+}
+
+.libro-card .card-title {
+  color: #2b2b26;
+  font-weight: bold;
+}
+
+.libro-card .card-text {
+  color: #4a4a40;
+  font-size: 0.9rem;
+}
+
+.libro-card .card-link {
+  color: #63a481;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.libro-card .card-link:hover {
+  color: #4e8a6a;
+  text-decoration: underline;
+}
+
+.libro-card .card-img-top {
+  height: 250px;
+  object-fit: cover;
+}
+
+.libro-card .card-body .btn-primary {
+  margin-top: 0;
+  width: auto;
+  flex-grow: 1;
+}
