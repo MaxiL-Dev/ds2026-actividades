@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function Hero() {
   return (
     <div className="container-fluid justify-content-center hero">
@@ -13,7 +15,9 @@ function Hero() {
       </div>
       <div className="row justify-content-center text-center mt-4">
         <div className="col-12">
-          <a className="btn btn-primary" href="catalogo.html">Ver catálogo</a>
+          <Link to="/catalogo" className="btn btn-primary">
+            Ver catálogo
+          </Link>
         </div>
       </div>
     </div>

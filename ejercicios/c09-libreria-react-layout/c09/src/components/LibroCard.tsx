@@ -6,6 +6,8 @@ export interface Libro {
   autor: string;
   img: string;
   likes: number;
+  descripcion: string;
+  precio: number;
 }
 
 interface LibroCardProps {

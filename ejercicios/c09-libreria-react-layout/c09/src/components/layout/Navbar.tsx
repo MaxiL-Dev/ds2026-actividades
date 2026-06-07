@@ -1,4 +1,5 @@
 import imgLibros from "../../assets/libros.png";
+import { NavLink } from 'react-router-dom'; // 1. Importamos NavLink
 
 function Navbar() {
   return (
@@ -20,10 +21,21 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link activo" aria-current="page" href="#">home</a>
+              {/* 2. Usamos NavLink y configuramos className dinámicamente */}
+              <NavLink 
+                to="/" 
+                className={({ isActive }) => isActive ? "nav-link activo" : "nav-link"}
+              >
+                home
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="./catalogo.html">catálogo</a>
+              <NavLink 
+                to="/catalogo" 
+                className={({ isActive }) => isActive ? "nav-link activo" : "nav-link"}
+              >
+                catálogo
+              </NavLink>
             </li>
           </ul>
         </div>
