@@ -1,0 +1,1 @@
+export type { Libro } from "../generated/prisma/client";
