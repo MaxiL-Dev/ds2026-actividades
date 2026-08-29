@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as autoresService from "../services/autor.service";
+import * as libroService from "../services/libro.service";
 
 export async function getAll(req: Request, res: Response) {
     return res.json(await autoresService.findAll());
@@ -26,4 +27,12 @@ export async function remove(req: Request, res: Response) {
     const borrado = await autoresService.remove(Number(req.params.id));
     if (!borrado) return res.status(404).json({ error: "Autor no encontrado" });
     return res.status(204).send();
+}
+
+export async function getLibrosByAutor(req: Request, res: Response) {
+    const autorId = Number(req.params.id);
+    const autor = await autoresService.findById(autorId);
+    if (!autor) return res.status(404).json({ error: "Autor no encontrado" });
+    const libros = await libroService.findByAutor(autorId);
+    return res.json(libros);
 }

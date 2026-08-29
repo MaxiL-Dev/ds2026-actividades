@@ -43,3 +43,10 @@ export async function remove(id: number): Promise<boolean> {
   await prisma.libro.delete({ where: { id } });
   return true;
 }
+
+export async function findByAutor(autorId: number): Promise<LibroConAutor[]> {
+  return prisma.libro.findMany({
+    where: { autorId },
+    include: { autor: true }
+  });
+}

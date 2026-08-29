@@ -78,6 +78,9 @@ Content-Type: application/json
 ### Eliminar un autor
 DELETE {{baseUrl}}/autores/1
 
+### Obtener todos los libros de un autor específico (Ruta anidada)
+GET {{baseUrl}}/autores/1/libros
+
 
 # ==========================================
 # SECCIÓN: CATEGORÍAS
@@ -110,7 +113,7 @@ DELETE {{baseUrl}}/categorias/1
 
 
 # ==========================================
-# SECCIÓN: CASOS DE ERROR (VALIDACIONES)
+# SECCIÓN: CASOS DE ERROR 
 # ==========================================
 
 ### Zod (400) - Crear libro sin título ni imagen

@@ -16,4 +16,6 @@ router.put("/:id", validateParams(idParamSchema), validate(autorUpdateSchema), a
 
 router.delete("/:id", validateParams(idParamSchema), autorController.remove);
 
+router.get("/:id/libros", validateParams(idParamSchema), autorController.getLibrosByAutor);
+
 export default router;
