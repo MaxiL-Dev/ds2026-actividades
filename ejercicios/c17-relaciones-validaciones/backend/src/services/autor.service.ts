@@ -1,19 +1,26 @@
+import { Prisma } from "../generated/prisma/client";
 import { prisma } from "../config/prisma";
-import { Autor } from "../types/autor.types";
+
+export type AutorConLibros = Prisma.AutorGetPayload<{ include: { libros: true } }>;
+
+export type Autor = Prisma.AutorGetPayload<{}>;
 
 export async function findAll(): Promise<Autor[]> {
   return prisma.autor.findMany();
 }
 
-export async function findById(id: number): Promise<Autor | null> {
-  return prisma.autor.findUnique({ where: { id } });
+export async function findById(id: number): Promise<AutorConLibros | null> {
+  return prisma.autor.findUnique({ 
+    where: { id },
+    include: { libros: true } 
+  });
 }
 
-export async function create(datos: Omit<Autor, "id">): Promise<Autor> {
+export async function create(datos: Prisma.AutorCreateInput): Promise<Autor> {
   return prisma.autor.create({ data: datos });
 }
 
-export async function update(id: number, datos: Partial<Omit<Autor, "id">>): Promise<Autor | null> {
+export async function update(id: number, datos: Prisma.AutorUpdateInput): Promise<Autor | null> {
   const existe = await prisma.autor.findUnique({ where: { id } });
   if (!existe) return null;
 

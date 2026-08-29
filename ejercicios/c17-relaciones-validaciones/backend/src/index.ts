@@ -1,6 +1,10 @@
 import express from "express";
 import libroRoutes from "./routes/libro.routes";
 import autorRoutes from "./routes/autor.routes";
+import categoriaRoutes from "./routes/categoria.routes"; 
+
+
+
 
 
 const app = express();
@@ -14,6 +18,7 @@ app.get("/", (_req, res) => {
 
 app.use("/api/libros", libroRoutes);
 app.use("/api/autores", autorRoutes);
+app.use("/api/categorias", categoriaRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor en http://localhost:${PORT}`);
