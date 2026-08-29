@@ -1,0 +1,1 @@
+export type { Autor } from "../generated/prisma/client";
