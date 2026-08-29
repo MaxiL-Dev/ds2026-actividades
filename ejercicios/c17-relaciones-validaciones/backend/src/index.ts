@@ -2,6 +2,7 @@ import express from "express";
 import libroRoutes from "./routes/libro.routes";
 import autorRoutes from "./routes/autor.routes";
 import categoriaRoutes from "./routes/categoria.routes"; 
+import { errorHandler } from "./middlewares/error.middleware";
 
 const app = express();
 const PORT = 3000;
@@ -19,3 +20,5 @@ app.use("/api/categorias", categoriaRoutes);
 app.listen(PORT, () => {
   console.log(`Servidor en http://localhost:${PORT}`);
 });
+
+app.use(errorHandler);
