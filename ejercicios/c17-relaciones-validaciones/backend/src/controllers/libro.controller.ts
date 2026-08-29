@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as libroService from "../services/libro.service";
+import * as autorService from "../services/autor.service";
 
 export async function getAll(req: Request, res: Response) {
   const { disponible, categoria } = req.query;
@@ -15,6 +16,11 @@ export async function getById(req: Request, res: Response) {
 }
 
 export async function create(req: Request, res: Response) {
+  const { autorId } = req.body;
+  const autor = await autorService.findById(autorId);
+  if (!autor) {
+    return res.status(400).json({ error: "El autor no existe" });
+  }
   const nuevo = await libroService.create(req.body);
   return res.status(201).json(nuevo);
 }

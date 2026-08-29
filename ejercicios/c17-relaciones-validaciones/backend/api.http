@@ -149,7 +149,7 @@ Content-Type: application/json
 ### Prisma (409) - Borrar un autor con libros (onDelete: Restrict)
 DELETE {{baseUrl}}/autores/1
 
-### Prisma (409/400) - Crear libro con un autor inexistente
+### Prisma (400) - Crear libro con un autor inexistente
 POST {{baseUrl}}/libros
 Content-Type: application/json
 
