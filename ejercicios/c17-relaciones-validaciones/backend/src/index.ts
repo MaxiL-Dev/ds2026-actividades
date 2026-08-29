@@ -3,10 +3,6 @@ import libroRoutes from "./routes/libro.routes";
 import autorRoutes from "./routes/autor.routes";
 import categoriaRoutes from "./routes/categoria.routes"; 
 
-
-
-
-
 const app = express();
 const PORT = 3000;
 
