@@ -2,9 +2,10 @@ import { Request, Response } from "express";
 import * as libroService from "../services/libro.service";
 
 export async function getAll(req: Request, res: Response) {
-  const { disponible } = req.query;
-  const filtro = disponible === undefined ? undefined : disponible === "true";
-  return res.json(await libroService.findAll(filtro));
+  const { disponible, categoria } = req.query;
+  const filtroDisponible = disponible === undefined ? undefined : disponible === "true";
+  const filtroCategoria = categoria ? String(categoria) : undefined;
+  return res.json(await libroService.findAll(filtroDisponible, filtroCategoria));
 }
 
 export async function getById(req: Request, res: Response) {
@@ -29,3 +30,4 @@ export async function remove(req: Request, res: Response) {
   if (!borrado) return res.status(404).json({ error: "Libro no encontrado" });
   return res.status(204).send();
 }
+

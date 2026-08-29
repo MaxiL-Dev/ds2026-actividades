@@ -46,6 +46,15 @@ Content-Type: application/json
 ### Eliminar un libro
 DELETE {{baseUrl}}/libros/1
 
+### Filtrar libros por categoría
+GET {{baseUrl}}/libros?categoria=Novela
+
+### Filtrar por categoría y disponibilidad al mismo tiempo
+GET {{baseUrl}}/libros?categoria=Novela&disponible=true
+
+### Filtrar por una categoría que no tiene libros
+GET {{baseUrl}}/libros?categoria=Ciencia
+
 
 # ==========================================
 # SECCIÓN: AUTORES

@@ -4,10 +4,13 @@ import { prisma } from "../config/prisma";
 export type LibroConAutor = Prisma.LibroGetPayload<{ include: { autor: true } }>;
 export type LibroDetalle = Prisma.LibroGetPayload<{ include: { autor: true, categorias: true } }>;
 
-export async function findAll(disponible?: boolean): Promise<LibroConAutor[]> {
+export async function findAll(disponible?: boolean, categoria?: string): Promise<LibroConAutor[]> {
   return prisma.libro.findMany({ 
-    where: disponible !== undefined ? { disponible } : undefined,
-    include: { autor: true } 
+    where: { 
+      disponible: disponible !== undefined ? disponible : undefined,
+      categorias: categoria ? { some: { nombre: categoria } } : undefined
+    },
+    include: { autor: true }
   });
 }
 
@@ -50,3 +53,4 @@ export async function findByAutor(autorId: number): Promise<LibroConAutor[]> {
     include: { autor: true }
   });
 }
+
