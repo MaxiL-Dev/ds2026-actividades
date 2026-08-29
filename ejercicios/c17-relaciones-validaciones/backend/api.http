@@ -1,7 +1,7 @@
 @baseUrl = http://localhost:3000/api
 
-### Ruta raíz / prueba (si aplica)
 GET http://localhost:3000/
+
 
 # ==========================================
 # SECCIÓN: LIBROS
@@ -25,8 +25,8 @@ Content-Type: application/json
 
 {
   "titulo": "Ficciones",
-  "autor": "Jorge Luis Borges",
-  "imagen": "",
+  "autorId": 1,
+  "imagen": "https://dummyimage.com/300",
   "precio": 15000,
   "disponible": true
 }
@@ -37,14 +37,15 @@ Content-Type: application/json
 
 {
   "titulo": "Cien años de soledad (Edición Ilustrada)",
-  "autor": "Gabriel García Márquez",
-  "imagen": "",
+  "autorId": 1,
+  "imagen": "https://dummyimage.com/300",
   "precio": 20000,
   "disponible": true
 }
 
 ### Eliminar un libro
 DELETE {{baseUrl}}/libros/1
+
 
 # ==========================================
 # SECCIÓN: AUTORES
@@ -76,3 +77,89 @@ Content-Type: application/json
 
 ### Eliminar un autor
 DELETE {{baseUrl}}/autores/1
+
+
+# ==========================================
+# SECCIÓN: CATEGORÍAS
+# ==========================================
+
+### Listar todas las categorías
+GET {{baseUrl}}/categorias
+
+### Obtener una categoría por ID
+GET {{baseUrl}}/categorias/1
+
+### Crear una nueva categoría
+POST {{baseUrl}}/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Fantasía"
+}
+
+### Actualizar una categoría existente
+PUT {{baseUrl}}/categorias/1
+Content-Type: application/json
+
+{
+  "nombre": "Fantasía Épica"
+}
+
+### Eliminar una categoría
+DELETE {{baseUrl}}/categorias/1
+
+
+# ==========================================
+# SECCIÓN: CASOS DE ERROR (VALIDACIONES)
+# ==========================================
+
+### Zod (400) - Crear libro sin título ni imagen
+POST {{baseUrl}}/libros
+Content-Type: application/json
+
+{ 
+  "precio": 5000, 
+  "autorId": 1 
+}
+
+### Zod (400) - ID inválido en la URL
+GET {{baseUrl}}/libros/abc
+
+### Prisma (409) - Autor duplicado (violación de @unique)
+POST {{baseUrl}}/autores
+Content-Type: application/json
+
+{ 
+  "nombre": "Gabriel García Márquez", 
+  "nacionalidad": "Colombia" 
+}
+
+### Prisma (409) - Borrar un autor con libros (onDelete: Restrict)
+DELETE {{baseUrl}}/autores/1
+
+### Prisma (409/400) - Crear libro con un autor inexistente
+POST {{baseUrl}}/libros
+Content-Type: application/json
+
+{ 
+  "titulo": "Huérfano", 
+  "precio": 5000, 
+  "imagen": "https://dummyimage.com/300", 
+  "autorId": 9999 
+}
+
+### Prisma (404) - Actualizar algo que no existe
+PUT {{baseUrl}}/libros/9999
+Content-Type: application/json
+
+{
+  "precio": 8000
+}
+
+### Zod (400) - Categoría sin nombre
+POST {{baseUrl}}/categorias
+Content-Type: application/json
+
+{
+  "nombre": ""
+}
