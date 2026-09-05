@@ -1,6 +1,141 @@
 @baseUrl = http://localhost:3000/api
 
+### Raíz de la API
 GET http://localhost:3000/
+
+
+# ==========================================
+# PASO 11: MATRIZ DE SEGURIDAD (12 CASOS)
+# ==========================================
+
+### 1. POST /auth/registro -> Esperado: 201 sin passwordHash en la respuesta
+POST {{baseUrl}}/auth/registro
+Content-Type: application/json
+
+{ 
+  "nombre": "Prueba", 
+  "email": "prueba123@libreria.test", 
+  "password": "Libreria2026" 
+}
+
+### 2. POST /auth/registro mismo email -> Esperado: 409
+POST {{baseUrl}}/auth/registro
+Content-Type: application/json
+
+{ 
+  "nombre": "Prueba Clon", 
+  "email": "prueba123@libreria.test", 
+  "password": "Libreria2026" 
+}
+
+### 3. POST /auth/registro password "corta" -> Esperado: 400 con los 3 errores de Zod
+POST {{baseUrl}}/auth/registro
+Content-Type: application/json
+
+{ 
+  "nombre": "Prueba Corta", 
+  "email": "corta@libreria.test", 
+  "password": "123" 
+}
+
+### 4. POST /auth/login mail que no existe -> Esperado: 401 "Credenciales inválidas"
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{ 
+  "email": "no_existo@libreria.test", 
+  "password": "Libreria2026" 
+}
+
+### 5. POST /auth/login password mal -> Esperado: 401 "Credenciales inválidas"
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{ 
+  "email": "cliente@libreria.test", 
+  "password": "PasswordIncorrecta1" 
+}
+
+### 6. POST /auth/login correcto (CLIENTE) -> Esperado: 200 con token
+# @name loginCliente
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{ 
+  "email": "cliente@libreria.test", 
+  "password": "Cliente1234" 
+}
+
+### Guardamos el token del Cliente en una variable
+@tokenCliente = {{loginCliente.response.body.token}}
+
+
+### 6b. POST /auth/login correcto (ADMIN) -> Necesario para probar la escritura
+# @name loginAdmin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{ 
+  "email": "admin@libreria.test", 
+  "password": "Admin1234" 
+}
+
+### Guardamos el token del Admin en otra variable
+@tokenAdmin = {{loginAdmin.response.body.token}}
+
+
+### 7. GET /auth/yo sin header -> Esperado: 401
+GET {{baseUrl}}/auth/yo
+
+
+### 8. GET /auth/yo con CLIENTE -> Esperado: 200 con los datos del cliente
+GET {{baseUrl}}/auth/yo
+Authorization: Bearer {{tokenCliente}}
+
+
+### 9. POST /api/libros sin header -> Esperado: 401
+POST {{baseUrl}}/libros
+Content-Type: application/json
+
+{
+  "titulo": "Libro Hacker",
+  "autorId": 1,
+  "imagen": "https://dummyimage.com/300",
+  "precio": 15000,
+  "disponible": true
+}
+
+
+### 10. POST /api/libros con CLIENTE -> Esperado: 403 (No tenés permiso)
+POST {{baseUrl}}/libros
+Content-Type: application/json
+Authorization: Bearer {{tokenCliente}}
+
+{
+  "titulo": "Libro Hacker",
+  "autorId": 1,
+  "imagen": "https://dummyimage.com/300",
+  "precio": 15000,
+  "disponible": true
+}
+
+
+### 11. POST /api/libros con ADMIN -> Esperado: 201
+POST {{baseUrl}}/libros
+Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
+
+{
+  "titulo": "Libro Autorizado",
+  "autorId": 1,
+  "imagen": "https://dummyimage.com/300",
+  "precio": 15000,
+  "disponible": true
+}
+
+
+### 12. GET /api/libros sin header -> Esperado: 200 (Es público)
+GET {{baseUrl}}/libros
 
 
 # ==========================================
@@ -19,9 +154,10 @@ GET {{baseUrl}}/libros?disponible=false
 ### Obtener un libro por ID
 GET {{baseUrl}}/libros/2
 
-### Crear un nuevo libro
+### Crear un nuevo libro (Protegido - Requiere Admin)
 POST {{baseUrl}}/libros
 Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "titulo": "Ficciones",
@@ -31,9 +167,10 @@ Content-Type: application/json
   "disponible": true
 }
 
-### Actualizar un libro existente
+### Actualizar un libro existente (Protegido - Requiere Admin)
 PUT {{baseUrl}}/libros/1
 Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "titulo": "Cien años de soledad (Edición Ilustrada)",
@@ -43,8 +180,9 @@ Content-Type: application/json
   "disponible": true
 }
 
-### Eliminar un libro
+### Eliminar un libro (Protegido - Requiere Admin)
 DELETE {{baseUrl}}/libros/1
+Authorization: Bearer {{tokenAdmin}}
 
 ### Filtrar libros por categoría
 GET {{baseUrl}}/libros?categoria=Novela
@@ -66,26 +204,29 @@ GET {{baseUrl}}/autores
 ### Obtener un autor por ID
 GET {{baseUrl}}/autores/2
 
-### Crear un nuevo autor
+### Crear un nuevo autor (Protegido - Requiere Admin)
 POST {{baseUrl}}/autores
 Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "nombre": "Jorge Luis Borges",
   "nacionalidad": "Argentina"
 }
 
-### Actualizar un autor existente
+### Actualizar un autor existente (Protegido - Requiere Admin)
 PUT {{baseUrl}}/autores/1
 Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "nombre": "Gabriel García Márquez (Premio Nobel)",
   "nacionalidad": "Colombia"
 }
 
-### Eliminar un autor
+### Eliminar un autor (Protegido - Requiere Admin)
 DELETE {{baseUrl}}/autores/1
+Authorization: Bearer {{tokenAdmin}}
 
 ### Obtener todos los libros de un autor específico (Ruta anidada)
 GET {{baseUrl}}/autores/1/libros
@@ -101,55 +242,28 @@ GET {{baseUrl}}/categorias
 ### Obtener una categoría por ID
 GET {{baseUrl}}/categorias/1
 
-### Crear una nueva categoría
+### Crear una nueva categoría (Protegido - Requiere Admin)
 POST {{baseUrl}}/categorias
 Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "nombre": "Fantasía"
 }
 
-### Actualizar una categoría existente
+### Actualizar una categoría existente (Protegido - Requiere Admin)
 PUT {{baseUrl}}/categorias/1
 Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "nombre": "Fantasía Épica"
 }
 
-### Eliminar una categoría
+### Eliminar una categoría (Protegido - Requiere Admin)
 DELETE {{baseUrl}}/categorias/1
+Authorization: Bearer {{tokenAdmin}}
 
-# ==========================================
-# SECCIÓN: USUARIOS
-# ==========================================
-
-### Registrar Usuario
-POST {{baseUrl}}/auth/registro
-Content-Type: application/json
-
-{ 
-  "nombre": "Ana", 
-  "email": "ana@libreria.test", 
-  "password": "Libreria2026" 
-}
-
-### Login
-# @name login
-POST {{baseUrl}}/auth/login
-Content-Type: application/json
-
-{ 
-  "email": "ana@libreria.test", 
-  "password": "Libreria2026" 
-}
-
-### Guardamos el token de la respuesta anterior
-@token = {{login.response.body.token}}
-
-### Prueba de token capturado (Acá usaremos el token más adelante)
-GET {{baseUrl}}/api/auth/yo
-Authorization: Bearer {{token}}
 
 # ==========================================
 # SECCIÓN: CASOS DE ERROR 
@@ -158,6 +272,7 @@ Authorization: Bearer {{token}}
 ### Zod (400) - Crear libro sin título ni imagen
 POST {{baseUrl}}/libros
 Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
 
 { 
   "precio": 5000, 
@@ -170,6 +285,7 @@ GET {{baseUrl}}/libros/abc
 ### Prisma (409) - Autor duplicado (violación de @unique)
 POST {{baseUrl}}/autores
 Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
 
 { 
   "nombre": "Gabriel García Márquez", 
@@ -178,10 +294,12 @@ Content-Type: application/json
 
 ### Prisma (409) - Borrar un autor con libros (onDelete: Restrict)
 DELETE {{baseUrl}}/autores/1
+Authorization: Bearer {{tokenAdmin}}
 
 ### Prisma (400) - Crear libro con un autor inexistente
 POST {{baseUrl}}/libros
 Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
 
 { 
   "titulo": "Huérfano", 
@@ -193,6 +311,7 @@ Content-Type: application/json
 ### Prisma (404) - Actualizar algo que no existe
 PUT {{baseUrl}}/libros/9999
 Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "precio": 8000
@@ -201,6 +320,7 @@ Content-Type: application/json
 ### Zod (400) - Categoría sin nombre
 POST {{baseUrl}}/categorias
 Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
 
 {
   "nombre": ""
