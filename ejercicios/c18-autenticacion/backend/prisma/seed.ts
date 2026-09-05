@@ -1,4 +1,5 @@
 import { prisma } from "../src/config/prisma.ts";
+import bcrypt from "bcrypt";
 
 const autores = [
   {nombre: "Gabriel García Márquez", nacionalidad: "Colombia" },
@@ -25,10 +26,23 @@ const libros = [
   {titulo: "El alquimista", autor: "Paulo Coelho", imagen: "", precio: 13000, disponible: true, cats: ["Novela", "Ficción"] }
 ];
 
+const usuarios = [
+  { email: "admin@libreria.test", nombre: "Admin", rol: "ADMIN" as const, password: "Admin1234" },
+  { email: "cliente@libreria.test", nombre: "Cliente", rol: "CLIENTE" as const, password: "Cliente1234" }
+];
+
 async function main() {
   await prisma.autor.createMany({ data: autores, skipDuplicates: true }); 
   await prisma.categoria.createMany({ data: categorias, skipDuplicates: true }); 
 
+  for (const { password, ...datos } of usuarios) { 
+    await prisma.usuario.upsert({
+      where: { email: datos.email }, 
+      update: {},
+      create: { ...datos, passwordHash: await bcrypt.hash(password, 10) },
+    });
+  }
+  
   for (const { autor, cats, ...datos } of libros) { 
     await prisma.libro.create({
       data: {
