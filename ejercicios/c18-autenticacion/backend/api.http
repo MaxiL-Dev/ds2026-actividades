@@ -120,6 +120,36 @@ Content-Type: application/json
 ### Eliminar una categoría
 DELETE {{baseUrl}}/categorias/1
 
+# ==========================================
+# SECCIÓN: USUARIOS
+# ==========================================
+
+### Registrar Usuario
+POST {{baseUrl}}/auth/registro
+Content-Type: application/json
+
+{ 
+  "nombre": "Ana", 
+  "email": "ana@libreria.test", 
+  "password": "Libreria2026" 
+}
+
+### Login
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{ 
+  "email": "ana@libreria.test", 
+  "password": "Libreria2026" 
+}
+
+### Guardamos el token de la respuesta anterior
+@token = {{login.response.body.token}}
+
+### Prueba de token capturado (Acá usaremos el token más adelante)
+GET {{baseUrl}}/api/auth/yo
+Authorization: Bearer {{token}}
 
 # ==========================================
 # SECCIÓN: CASOS DE ERROR 

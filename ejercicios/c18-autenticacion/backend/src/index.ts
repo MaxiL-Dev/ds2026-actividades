@@ -19,8 +19,9 @@ app.use("/api/libros", libroRoutes);
 app.use("/api/autores", autorRoutes);
 app.use("/api/categorias", categoriaRoutes);
 
+app.use(errorHandler);
+
 app.listen(PORT, () => {
   console.log(`Servidor en http://localhost:${PORT}`);
 });
 
-app.use(errorHandler);
