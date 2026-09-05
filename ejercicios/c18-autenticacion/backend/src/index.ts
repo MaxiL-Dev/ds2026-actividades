@@ -2,6 +2,7 @@ import express from "express";
 import libroRoutes from "./routes/libro.routes";
 import autorRoutes from "./routes/autor.routes";
 import categoriaRoutes from "./routes/categoria.routes"; 
+import authRoutes from "./routes/auth.routes"
 import { errorHandler } from "./middlewares/error.middleware";
 
 const app = express();
@@ -13,6 +14,7 @@ app.get("/", (_req, res) => {
   res.json({ mensaje: "API de la Librería" });
 });
 
+app.use("/api/auth", authRoutes);
 app.use("/api/libros", libroRoutes);
 app.use("/api/autores", autorRoutes);
 app.use("/api/categorias", categoriaRoutes);
