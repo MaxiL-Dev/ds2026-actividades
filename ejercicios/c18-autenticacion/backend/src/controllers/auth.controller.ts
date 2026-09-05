@@ -23,3 +23,8 @@ export async function yo(req: Request, res: Response) {
   
   return res.json(usuario);
 }
+
+export async function updateYo(req: Request, res: Response) {
+  const usuarioActualizado = await authService.updateName(req.usuario!.id, req.body.nombre);
+  return res.json(usuarioActualizado);
+}

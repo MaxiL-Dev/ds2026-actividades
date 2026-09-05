@@ -36,6 +36,14 @@ export async function login(datos: any) {
 export async function findById(id: number) {
   return prisma.usuario.findUnique({
     where: { id },
-    select: { id: true, email: true, nombre: true, rol: true } // Seguro: sin el hash
+    select: { id: true, email: true, nombre: true, rol: true } 
+  });
+}
+
+export async function updateName(id: number, nombre: string) {
+  return prisma.usuario.update({
+    where: { id },
+    data: { nombre },
+    select: { id: true, email: true, nombre: true, rol: true } 
   });
 }
