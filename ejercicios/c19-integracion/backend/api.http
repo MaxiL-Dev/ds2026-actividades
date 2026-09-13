@@ -28,7 +28,7 @@ Content-Type: application/json
   "password": "Libreria2026" 
 }
 
-### 3. POST /auth/registro password "corta" -> Esperado: 400 con los 3 errores de Zod
+### 3. POST /auth/registro password "corta" -> Esperado: 400 con los 2 errores de Zod
 POST {{baseUrl}}/auth/registro
 Content-Type: application/json
 
@@ -325,3 +325,211 @@ Authorization: Bearer {{tokenAdmin}}
 {
   "nombre": ""
 }
+
+
+# --------------------------------------------------
+# 400 - DATOS INVÁLIDOS (complementos)
+# --------------------------------------------------
+
+### Zod (400) - Login sin password
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{ 
+  "email": "cliente@libreria.test" 
+}
+
+### Zod (400) - Actualizar perfil con nombre vacío
+PUT {{baseUrl}}/auth/yo
+Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
+
+{ 
+  "nombre": " " 
+}
+
+### Zod (400) - Libro con precio 0 (debe ser positivo)
+POST {{baseUrl}}/libros
+Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
+
+{ 
+  "titulo": "Gratis", 
+  "precio": 0, 
+  "autorId": 1 
+}
+
+### Zod (400) - Autor sin nombre
+POST {{baseUrl}}/autores
+Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
+
+{ 
+  "nombre": "", 
+  "nacionalidad": "Argentina" 
+}
+
+
+# --------------------------------------------------
+# 401 - SIN AUTENTICACIÓN (complementos)
+# --------------------------------------------------
+
+### 401 - GET /auth/yo con token inválido
+GET {{baseUrl}}/auth/yo
+Authorization: Bearer tokenInvalido123
+
+### 401 - PUT /auth/yo sin header
+PUT {{baseUrl}}/auth/yo
+Content-Type: application/json
+
+{ "nombre": "Nuevo Nombre" }
+
+### 401 - PUT /libros sin header
+PUT {{baseUrl}}/libros/2
+Content-Type: application/json
+
+{ "titulo": "Sin token" }
+
+### 401 - DELETE /libros sin header
+DELETE {{baseUrl}}/libros/2
+
+### 401 - POST /autores sin header
+POST {{baseUrl}}/autores
+Content-Type: application/json
+
+{ "nombre": "Sin token", "nacionalidad": "Desconocida" }
+
+### 401 - PUT /autores sin header
+PUT {{baseUrl}}/autores/1
+Content-Type: application/json
+
+{ "nombre": "Sin token" }
+
+### 401 - DELETE /autores sin header
+DELETE {{baseUrl}}/autores/1
+
+### 401 - POST /categorias sin header
+POST {{baseUrl}}/categorias
+Content-Type: application/json
+
+{ "nombre": "Sin token" }
+
+### 401 - PUT /categorias sin header
+PUT {{baseUrl}}/categorias/1
+Content-Type: application/json
+
+{ "nombre": "Sin token" }
+
+### 401 - DELETE /categorias sin header
+DELETE {{baseUrl}}/categorias/1
+
+
+# --------------------------------------------------
+# 403 - PERMISO DENEGADO (Rol CLIENTE, complementos)
+# --------------------------------------------------
+
+### 403 - PUT /libros con CLIENTE
+PUT {{baseUrl}}/libros/2
+Content-Type: application/json
+Authorization: Bearer {{tokenCliente}}
+
+{ "titulo": "Intento cliente" }
+
+### 403 - DELETE /libros con CLIENTE
+DELETE {{baseUrl}}/libros/2
+Authorization: Bearer {{tokenCliente}}
+
+### 403 - POST /autores con CLIENTE
+POST {{baseUrl}}/autores
+Content-Type: application/json
+Authorization: Bearer {{tokenCliente}}
+
+{ "nombre": "Intento cliente", "nacionalidad": "Desconocida" }
+
+### 403 - PUT /autores con CLIENTE
+PUT {{baseUrl}}/autores/1
+Content-Type: application/json
+Authorization: Bearer {{tokenCliente}}
+
+{ "nombre": "Intento cliente" }
+
+### 403 - DELETE /autores con CLIENTE
+DELETE {{baseUrl}}/autores/1
+Authorization: Bearer {{tokenCliente}}
+
+### 403 - POST /categorias con CLIENTE
+POST {{baseUrl}}/categorias
+Content-Type: application/json
+Authorization: Bearer {{tokenCliente}}
+
+{ "nombre": "Intento cliente" }
+
+### 403 - PUT /categorias con CLIENTE
+PUT {{baseUrl}}/categorias/1
+Content-Type: application/json
+Authorization: Bearer {{tokenCliente}}
+
+{ "nombre": "Intento cliente" }
+
+### 403 - DELETE /categorias con CLIENTE
+DELETE {{baseUrl}}/categorias/1
+Authorization: Bearer {{tokenCliente}}
+
+
+# --------------------------------------------------
+# 404 - NO ENCONTRADO (complementos)
+# --------------------------------------------------
+
+### 404 - Libro por ID inexistente
+GET {{baseUrl}}/libros/9999
+
+### 404 - Eliminar libro inexistente
+DELETE {{baseUrl}}/libros/9999
+Authorization: Bearer {{tokenAdmin}}
+
+### 404 - Autor por ID inexistente
+GET {{baseUrl}}/autores/9999
+
+### 404 - Actualizar autor inexistente
+PUT {{baseUrl}}/autores/9999
+Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
+
+{ "nombre": "No existe" }
+
+### 404 - Eliminar autor inexistente
+DELETE {{baseUrl}}/autores/9999
+Authorization: Bearer {{tokenAdmin}}
+
+### 404 - Categoría por ID inexistente
+GET {{baseUrl}}/categorias/9999
+
+### 404 - Actualizar categoría inexistente
+PUT {{baseUrl}}/categorias/9999
+Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
+
+{ "nombre": "No existe" }
+
+### 404 - Eliminar categoría inexistente
+DELETE {{baseUrl}}/categorias/9999
+Authorization: Bearer {{tokenAdmin}}
+
+
+# --------------------------------------------------
+# 409 - CONFLICTO (complementos)
+# --------------------------------------------------
+
+### Prisma (409) - Categoría duplicada (violación de @unique)
+# Depende de que "Fantasía Épica" exista (creada más arriba)
+POST {{baseUrl}}/categorias
+Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
+
+{ 
+  "nombre": "Fantasía Épica" 
+}
+
+### Prisma (409) - Borrar una categoría con libros (FK en tabla implícita)
+DELETE {{baseUrl}}/categorias/1
+Authorization: Bearer {{tokenAdmin}}
