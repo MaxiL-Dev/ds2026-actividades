@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { apiFetch } from '../services/api';
 
 export function useFetch<T>(url: string) {
   const [data, setData] = useState<T | null>(null);
@@ -8,14 +9,9 @@ export function useFetch<T>(url: string) {
   useEffect(() => {
     const cargar = async () => {
       try {
-        setLoading(true);
-        setError(null);
-        
-        const res = await fetch(url);
-        if (!res.ok) throw new Error('Error al cargar los datos');
-        
-        setData(await res.json());
-      } catch (e) {
+        const responseData = await apiFetch<T>(url);
+        setData(responseData);
+      } catch (e: any) {
         setError(e instanceof Error ? e.message : 'Error desconocido');
       } finally {
         setLoading(false);

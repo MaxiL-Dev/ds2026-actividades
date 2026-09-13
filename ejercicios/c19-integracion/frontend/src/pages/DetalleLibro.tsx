@@ -17,10 +17,10 @@ function LibroDetalle() {
     <div className="container mt-4 mb-5">
       {/* Botón Volver mejorado */}
       <div className="mb-4">
-        <Link 
-          to="/" 
-          className="btn d-inline-flex align-items-center gap-2" 
-          style={{ backgroundColor: '#fff7d4', color: '#2b2b26', fontWeight: 'bold', border: 'none' }}
+        <Link
+          to="/"
+          className="btn btn-primary d-inline-flex align-items-center gap-2"
+          style={{ marginTop: 0, width: 'auto' }}
         >
           <i className="bi bi-arrow-left"></i> Volver al inicio
         </Link>

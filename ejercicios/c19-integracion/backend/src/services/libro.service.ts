@@ -2,15 +2,19 @@ import { Prisma } from "../generated/prisma/client";
 import { prisma } from "../config/prisma";
 
 export type LibroConAutor = Prisma.LibroGetPayload<{ include: { autor: true } }>;
+export type LibroConCategorias = Prisma.LibroGetPayload<{ include: { autor: true, categorias: true } }>;
 export type LibroDetalle = Prisma.LibroGetPayload<{ include: { autor: true, categorias: true } }>;
 
-export async function findAll(disponible?: boolean, categoria?: string): Promise<LibroConAutor[]> {
+export type LibroCreate = Prisma.LibroUncheckedCreateInput & { categoriasIds?: number[] };
+export type LibroUpdate = Prisma.LibroUncheckedUpdateInput & { categoriasIds?: number[] };
+
+export async function findAll(disponible?: boolean, categoria?: string): Promise<LibroConCategorias[]> {
   return prisma.libro.findMany({ 
     where: { 
       disponible: disponible !== undefined ? disponible : undefined,
       categorias: categoria ? { some: { nombre: categoria } } : undefined
     },
-    include: { autor: true }
+    include: { autor: true, categorias: true }
   });
 }
 
@@ -21,21 +25,35 @@ export async function findById(id: number): Promise<LibroDetalle | null> {
   });
 }
 
-export async function create(datos: Prisma.LibroUncheckedCreateInput): Promise<LibroConAutor> {
+export async function create(datos: LibroCreate): Promise<LibroConCategorias> {
+  const { categoriasIds, ...rest } = datos;
+
   return prisma.libro.create({ 
-    data: datos,
-    include: { autor: true } 
+    data: {
+      ...rest,
+      categorias: categoriasIds && categoriasIds.length > 0
+        ? { connect: categoriasIds.map((id) => ({ id })) }
+        : undefined,
+    },
+    include: { autor: true, categorias: true } 
   });
 }
 
-export async function update(id: number, datos: Prisma.LibroUncheckedUpdateInput): Promise<LibroConAutor | null> {
+export async function update(id: number, datos: LibroUpdate): Promise<LibroConCategorias | null> {
   const existe = await prisma.libro.findUnique({ where: { id } });
   if (!existe) return null;
 
+  const { categoriasIds, ...rest } = datos;
+
   return prisma.libro.update({
     where: { id },
-    data: datos,
-    include: { autor: true }
+    data: {
+      ...rest,
+      categorias: categoriasIds
+        ? { set: categoriasIds.map((id) => ({ id })) }
+        : undefined,
+    },
+    include: { autor: true, categorias: true }
   });
 }
 

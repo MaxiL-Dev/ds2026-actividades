@@ -27,6 +27,10 @@ app.use("/api/libros", libroRoutes);
 app.use("/api/autores", autorRoutes);
 app.use("/api/categorias", categoriaRoutes);
 
+app.use((req, res) => {
+  res.status(404).json({ error: "Ruta no encontrada" });
+});
+
 app.use(errorHandler);
 
 app.listen(PORT, () => {
