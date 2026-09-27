@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { Alert, Spinner } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import imgLibros from '../assets/libros.png';
 
 function Login() {
   const { usuario, login } = useAuth();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -22,8 +24,13 @@ function Login() {
 
     try {
       await login({ email, password });
-    } catch (err: any) {
-      setError(err.message);
+      navigate('/catalogo');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Credenciales inválidas o error de conexión');
+      }
     } finally {
       setLoading(false);
     }
@@ -47,7 +54,11 @@ function Login() {
 
           <form onSubmit={onSubmit} noValidate>
             <div className="mb-3">
-              <label className="form-label" htmlFor="login-email" style={{ color: '#4a4a40', fontWeight: 'bold' }}>
+              <label
+                className="form-label"
+                htmlFor="login-email"
+                style={{ color: '#4a4a40', fontWeight: 'bold' }}
+              >
                 Email
               </label>
               <input
@@ -64,7 +75,11 @@ function Login() {
               />
             </div>
             <div className="mb-4">
-              <label className="form-label" htmlFor="login-password" style={{ color: '#4a4a40', fontWeight: 'bold' }}>
+              <label
+                className="form-label"
+                htmlFor="login-password"
+                style={{ color: '#4a4a40', fontWeight: 'bold' }}
+              >
                 Contraseña
               </label>
               <input

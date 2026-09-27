@@ -1,4 +1,4 @@
-import imgLibros from "../../assets/libros.png";
+import imgLibros from '../../assets/libros.png';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
@@ -32,7 +32,7 @@ function Navbar() {
             <li className="nav-item">
               <NavLink
                 to="/inicio"
-                className={({ isActive }) => isActive ? "nav-link activo" : "nav-link"}
+                className={({ isActive }) => (isActive ? 'nav-link activo' : 'nav-link')}
               >
                 home
               </NavLink>
@@ -40,7 +40,7 @@ function Navbar() {
             <li className="nav-item">
               <NavLink
                 to="/catalogo"
-                className={({ isActive }) => isActive ? "nav-link activo" : "nav-link"}
+                className={({ isActive }) => (isActive ? 'nav-link activo' : 'nav-link')}
               >
                 catálogo
               </NavLink>
@@ -48,7 +48,7 @@ function Navbar() {
             <li className="nav-item">
               <NavLink
                 to="/autores"
-                className={({ isActive }) => isActive ? "nav-link activo" : "nav-link"}
+                className={({ isActive }) => (isActive ? 'nav-link activo' : 'nav-link')}
               >
                 autores
               </NavLink>
@@ -56,25 +56,39 @@ function Navbar() {
             <li className="nav-item">
               <NavLink
                 to="/categorias"
-                className={({ isActive }) => isActive ? "nav-link activo" : "nav-link"}
+                className={({ isActive }) => (isActive ? 'nav-link activo' : 'nav-link')}
               >
                 categorías
               </NavLink>
             </li>
           </ul>
-          <ul className="navbar-nav">
-            {usuario && (
+
+          <ul className="navbar-nav align-items-center">
+            {usuario ? (
+              <>
+                <li className="nav-item me-3">
+                  <span className="navbar-text text-light">
+                    Hola, {usuario.nombre}
+                  </span>
+                </li>
+                <li className="nav-item">
+                  <button
+                    type="button"
+                    onClick={cerrarSesion}
+                    className="btn btn-outline-light btn-sm d-flex align-items-center gap-1"
+                    aria-label="Salir"
+                    title="Salir"
+                  >
+                    <i className="bi bi-box-arrow-right"></i>
+                    <span>Salir</span>
+                  </button>
+                </li>
+              </>
+            ) : (
               <li className="nav-item">
-                <button
-                  type="button"
-                  onClick={cerrarSesion}
-                  className="btn btn-outline-light btn-sm d-flex align-items-center justify-content-center"
-                  style={{ marginTop: 0, width: 38, height: 38 }}
-                  aria-label="Salir"
-                  title="Salir"
-                >
-                  <i className="bi bi-box-arrow-right"></i>
-                </button>
+                <NavLink to="/login" className="btn btn-outline-light btn-sm">
+                  Ingresar
+                </NavLink>
               </li>
             )}
           </ul>
