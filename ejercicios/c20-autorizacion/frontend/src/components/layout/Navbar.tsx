@@ -3,7 +3,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 function Navbar() {
-  const { usuario, logout } = useAuth();
+  // Desestructuramos tieneRol del contexto
+  const { usuario, logout, tieneRol } = useAuth();
   const navigate = useNavigate();
 
   const cerrarSesion = () => {
@@ -45,22 +46,27 @@ function Navbar() {
                 catálogo
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink
-                to="/autores"
-                className={({ isActive }) => (isActive ? 'nav-link activo' : 'nav-link')}
-              >
-                autores
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                to="/categorias"
-                className={({ isActive }) => (isActive ? 'nav-link activo' : 'nav-link')}
-              >
-                categorías
-              </NavLink>
-            </li>
+
+            {tieneRol('ADMIN') && (
+              <>
+                <li className="nav-item">
+                  <NavLink
+                    to="/autores"
+                    className={({ isActive }) => (isActive ? 'nav-link activo' : 'nav-link')}
+                  >
+                    autores
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    to="/categorias"
+                    className={({ isActive }) => (isActive ? 'nav-link activo' : 'nav-link')}
+                  >
+                    categorías
+                  </NavLink>
+                </li>
+              </>
+            )}
           </ul>
 
           <ul className="navbar-nav align-items-center">
