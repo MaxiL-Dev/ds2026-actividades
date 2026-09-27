@@ -31,7 +31,7 @@ function Navbar() {
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
               <NavLink
-                to="/inicio"
+                to="/"
                 className={({ isActive }) => (isActive ? 'nav-link activo' : 'nav-link')}
               >
                 home
