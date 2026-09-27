@@ -1,11 +1,18 @@
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Alert, Spinner } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import imgLibros from '../assets/libros.png';
 
+const RUTA_POR_DEFECTO = '/catalogo';
+
+interface EstadoRedireccion {
+  desde?: string;
+}
+
 function Login() {
   const { usuario, login } = useAuth();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -13,8 +20,11 @@ function Login() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const destino =
+    (location.state as EstadoRedireccion | null)?.desde ?? RUTA_POR_DEFECTO;
+
   if (usuario) {
-    return <Navigate to="/catalogo" replace />;
+    return <Navigate to={destino} replace />;
   }
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -24,7 +34,7 @@ function Login() {
 
     try {
       await login({ email, password });
-      navigate('/catalogo');
+      navigate(destino, { replace: true });
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);

@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import { useAuth } from '../context/AuthContext';
 import type { Rol } from '../types/sesionType';
@@ -9,6 +9,7 @@ interface PrivateRouteProps {
 
 export function PrivateRoute({ rol }: PrivateRouteProps) {
   const { usuario, cargando } = useAuth();
+  const location = useLocation();
 
   if (cargando) {
     return (
@@ -21,7 +22,7 @@ export function PrivateRoute({ rol }: PrivateRouteProps) {
   }
 
   if (!usuario) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" replace state={{ desde: location.pathname }} />;
   }
 
   if (rol && usuario.rol !== rol) {

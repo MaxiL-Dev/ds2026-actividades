@@ -1,12 +1,19 @@
 import { obtenerToken } from './sesion';
 
+export interface DetalleValidacion {
+  campo: string;
+  mensaje: string;
+}
+
 export class ApiError extends Error {
   status: number;
+  detalles: DetalleValidacion[];
 
-  constructor(status: number, message: string) {
+  constructor(status: number, message: string, detalles: DetalleValidacion[] = []) {
     super(message);
     this.name = 'ApiError';
     this.status = status;
+    this.detalles = detalles;
   }
 }
 
@@ -31,7 +38,11 @@ export async function apiFetch<T>(ruta: string, opciones: RequestInit = {}): Pro
   }
 
   if (!res.ok) {
-    throw new ApiError(res.status, cuerpo?.error ?? `Error ${res.status}`);
+    throw new ApiError(
+      res.status,
+      cuerpo?.error ?? `Error ${res.status}`,
+      cuerpo?.detalles ?? [],
+    );
   }
 
   return cuerpo as T;

@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Spinner, Alert } from 'react-bootstrap';
 import Libros from '../assets/libros.png';
 import type { LibroApi } from '../types/libroType';
 import { listarLibros, eliminarLibro } from '../services/libros';
+import { ApiError } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import LibroFormModal from '../components/LibroFormModal';
 import ConfirmarModal from '../components/ConfirmarModal';
 
 function Catalogo() {
   const { tieneRol } = useAuth();
+  const navigate = useNavigate();
   const esAdmin = tieneRol('ADMIN');
 
   const [libros, setLibros] = useState<LibroApi[] | null>(null);
@@ -25,8 +28,12 @@ function Catalogo() {
     try {
       setLibros(await listarLibros());
       setError(null);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(
+        err instanceof ApiError
+          ? err.message
+          : 'No pudimos cargar el catálogo. Revisá tu conexión.',
+      );
     } finally {
       setCargando(false);
     }
@@ -79,9 +86,31 @@ function Catalogo() {
       await eliminarLibro(libroAEliminar.id);
       setLibroAEliminar(null);
       await cargar();
-    } catch (err: any) {
-      setAccionError(err?.message ?? 'Error al eliminar el libro');
+    } catch (err: unknown) {
       setLibroAEliminar(null);
+
+      if (err instanceof ApiError) {
+        if (err.status === 403) {
+          navigate('/sin-permiso', { replace: true });
+          return;
+        }
+
+        if (err.status === 409) {
+          setAccionError('No se puede eliminar: el libro tiene registros relacionados.');
+          return;
+        }
+
+        if (err.status === 404) {
+          setAccionError('El libro ya no existe.');
+          await cargar();
+          return;
+        }
+
+        setAccionError('Error del servidor. Intentá de nuevo en unos minutos.');
+        return;
+      }
+
+      setAccionError('No pudimos conectar con el servidor. Revisá tu conexión.');
     } finally {
       setEliminando(false);
     }
@@ -97,14 +126,16 @@ function Catalogo() {
             <h2 id="titulo-catalogo" style={{ color: '#fff2ba' }} className="m-0">
               Catálogo de Libros
             </h2>
-            <button
-              type="button"
-              onClick={abrirCrear}
-              className="btn-primary text-decoration-none d-inline-flex align-items-center justify-content-center gap-2"
-              style={{ width: 'auto', marginTop: 0, border: 'none' }}
-            >
-              <i className="bi bi-plus-circle"></i> Agregar Libro
-            </button>
+            {esAdmin && (
+              <button
+                type="button"
+                onClick={abrirCrear}
+                className="btn-primary text-decoration-none d-inline-flex align-items-center justify-content-center gap-2"
+                style={{ width: 'auto', marginTop: 0, border: 'none' }}
+              >
+                <i className="bi bi-plus-circle"></i> Agregar Libro
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -166,26 +197,28 @@ function Catalogo() {
                       </div>
                     )}
                     <p className="card-text text-muted small mt-auto">{libro.autor.nombre}</p>
-                    <div className="d-flex justify-content-end gap-2 mt-2">
-                      <button
-                        type="button"
-                        onClick={() => abrirEditar(libro)}
-                        className="btn-editar-libro"
-                        aria-label={`Editar ${libro.titulo}`}
-                        title="Editar libro"
-                      >
-                        <i className="bi bi-pencil"></i>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => abrirEliminar(libro)}
-                        className="btn-eliminar-libro"
-                        aria-label={`Eliminar ${libro.titulo}`}
-                        title="Eliminar libro"
-                      >
-                        <i className="bi bi-trash"></i>
-                      </button>
-                    </div>
+                    {esAdmin && (
+                      <div className="d-flex justify-content-end gap-2 mt-2">
+                        <button
+                          type="button"
+                          onClick={() => abrirEditar(libro)}
+                          className="btn-editar-libro"
+                          aria-label={`Editar ${libro.titulo}`}
+                          title="Editar libro"
+                        >
+                          <i className="bi bi-pencil"></i>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => abrirEliminar(libro)}
+                          className="btn-eliminar-libro"
+                          aria-label={`Eliminar ${libro.titulo}`}
+                          title="Eliminar libro"
+                        >
+                          <i className="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Modal, Form, Alert, Spinner, Button } from 'react-bootstrap';
@@ -7,6 +8,7 @@ import type { Autor, Categoria, LibroApi } from '../types/libroType';
 import { listarAutores } from '../services/autores';
 import { listarCategorias } from '../services/categorias';
 import { crearLibro, actualizarLibro } from '../services/libros';
+import { ApiError } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import Combobox from './Combobox';
 
@@ -18,6 +20,8 @@ const libroSchema = z.object({
 
 type FormularioLibro = z.infer<typeof libroSchema>;
 
+const CAMPOS_DEL_FORMULARIO = ['titulo', 'precio', 'imagen'] as const;
+
 interface LibroFormModalProps {
   show: boolean;
   libro?: LibroApi | null;
@@ -27,9 +31,16 @@ interface LibroFormModalProps {
 
 function LibroFormModal({ show, libro = null, onClose, onGuardado }: LibroFormModalProps) {
   const { usuario } = useAuth();
+  const navigate = useNavigate();
   const esAdmin = usuario?.rol === 'ADMIN';
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormularioLibro>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError: setErrorCampo,
+    formState: { errors },
+  } = useForm<FormularioLibro>({
     resolver: zodResolver(libroSchema)
   });
 
@@ -38,6 +49,7 @@ function LibroFormModal({ show, libro = null, onClose, onGuardado }: LibroFormMo
   const [autorId, setAutorId] = useState<number | null>(null);
   const [autorError, setAutorError] = useState<string | null>(null);
   const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState<number[]>([]);
+  const [categoriasError, setCategoriasError] = useState<string | null>(null);
   const [guardando, setGuardando] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -46,6 +58,7 @@ function LibroFormModal({ show, libro = null, onClose, onGuardado }: LibroFormMo
 
     setError(null);
     setAutorError(null);
+    setCategoriasError(null);
     setAutorId(libro?.autor.id ?? null);
     setCategoriasSeleccionadas(libro?.categorias.map((c) => c.id) ?? []);
     reset({
@@ -100,8 +113,41 @@ function LibroFormModal({ show, libro = null, onClose, onGuardado }: LibroFormMo
       }
       onGuardado();
       onClose();
-    } catch (err: any) {
-      setError(err?.message ?? 'Error al guardar el libro');
+    } catch (err: unknown) {
+      if (err instanceof ApiError) {
+        if (err.status === 403) {
+          navigate('/sin-permiso', { replace: true });
+          return;
+        }
+
+        if (err.status === 400) {
+          const sinCampo: string[] = [];
+
+          for (const { campo, mensaje } of err.detalles) {
+            if ((CAMPOS_DEL_FORMULARIO as readonly string[]).includes(campo)) {
+              setErrorCampo(campo as keyof FormularioLibro, { message: mensaje });
+            } else if (campo === 'autorId') {
+              setAutorError(mensaje);
+            } else if (campo === 'categoriasIds') {
+              setCategoriasError(mensaje);
+            } else {
+              sinCampo.push(mensaje);
+            }
+          }
+
+          setError(
+            sinCampo.length > 0
+              ? `Revisá los datos ingresados: ${sinCampo.join(' ')}`
+              : 'Revisá los campos marcados en el formulario.'
+          );
+          return;
+        }
+
+        setError('Error del servidor. Intentá de nuevo en unos minutos.');
+        return;
+      }
+
+      setError('No pudimos conectar con el servidor. Revisá tu conexión.');
     } finally {
       setGuardando(false);
     }
@@ -171,7 +217,12 @@ function LibroFormModal({ show, libro = null, onClose, onGuardado }: LibroFormMo
               etiqueta="Categorías"
               placeholder="Buscá categorías..."
               valor={categoriasSeleccionadas}
-              onChange={setCategoriasSeleccionadas}
+              onChange={(ids) => {
+                setCategoriasSeleccionadas(ids);
+                setCategoriasError(null);
+              }}
+              invalid={!!categoriasError}
+              error={categoriasError ?? undefined}
             />
           </div>
 
