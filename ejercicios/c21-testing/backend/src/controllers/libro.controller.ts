@@ -1,0 +1,39 @@
+import { Request, Response } from "express";
+import * as libroService from "../services/libro.service";
+import * as autorService from "../services/autor.service";
+
+export async function getAll(req: Request, res: Response) {
+  const { disponible, categoria } = req.query;
+  const filtroDisponible = disponible === undefined ? undefined : disponible === "true";
+  const filtroCategoria = categoria ? String(categoria) : undefined;
+  return res.json(await libroService.findAll(filtroDisponible, filtroCategoria));
+}
+
+export async function getById(req: Request, res: Response) {
+  const libro = await libroService.findById(Number(req.params.id));
+  if (!libro) return res.status(404).json({ error: "Libro no encontrado" });
+  return res.json(libro);
+}
+
+export async function create(req: Request, res: Response) {
+  const { autorId } = req.body;
+  const autor = await autorService.findById(autorId);
+  if (!autor) {
+    return res.status(400).json({ error: "El autor no existe" });
+  }
+  const nuevo = await libroService.create(req.body);
+  return res.status(201).json(nuevo);
+}
+
+export async function update(req: Request, res: Response) {
+  const actualizado = await libroService.update(Number(req.params.id), req.body);
+  if (!actualizado) return res.status(404).json({ error: "Libro no encontrado" });
+  return res.json(actualizado);
+}
+
+export async function remove(req: Request, res: Response) {
+  const borrado = await libroService.remove(Number(req.params.id));
+  if (!borrado) return res.status(404).json({ error: "Libro no encontrado" });
+  return res.status(204).send();
+}
+
