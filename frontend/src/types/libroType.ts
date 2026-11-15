@@ -1,0 +1,20 @@
+export interface Autor {
+  id: number;
+  nombre: string;
+  nacionalidad: string;
+}
+
+export interface Categoria {
+  id: number;
+  nombre: string;
+}
+
+export interface LibroApi {
+  id: number;
+  titulo: string;
+  autor: Autor;
+  categorias: Categoria[];
+  imagen: string;
+  precio: number;
+  disponible: boolean;
+}
